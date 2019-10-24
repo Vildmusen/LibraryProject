@@ -3,6 +3,8 @@ using Library.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,9 +92,27 @@ namespace Library.Services
             OnUpdate();
         }
 
+        public IEnumerable<Book> AllAscendingOnProperty(string property)
+        {
+            return All().OrderBy(BuildQuery(property));
+        }
+
+        internal IEnumerable<Book> AllDescendingOnProperty(string property)
+        {
+            return All().OrderByDescending(x => x.ToString() == property);
+        }
+
+        private Func<Book, int> BuildQuery(string property)
+        {
+            var x = Expression.Parameter(typeof(Book), "x");
+            var body = Expression.PropertyOrField(x, property);
+            return Expression.Lambda<Func<Book, int>>(body, x).Compile();
+        }
+
         public void OnUpdate()
         {
             Updated?.Invoke(this, new EventArgs());
         }
+
     }
 }

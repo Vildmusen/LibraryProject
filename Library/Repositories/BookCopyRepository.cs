@@ -39,6 +39,7 @@ namespace Library.Repositories
         public void Remove(BookCopy item)
         {
             context.BookCopies.Remove(item);
+            context.SaveChanges();
         }
     }
 }

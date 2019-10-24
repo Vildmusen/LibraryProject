@@ -29,7 +29,7 @@ namespace Library.Models
 
         public override string ToString()
         {
-            return String.Format("[{0}] - {1} : {2}", CopyID, Book.Title, State);
+            return String.Format("[{0}]-[{1}] {2}", State, CopyID, Book.Title);
         }
     }
 }

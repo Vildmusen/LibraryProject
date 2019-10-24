@@ -3,6 +3,8 @@ using Library.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,17 +39,17 @@ namespace Library.Services
             OnUpdate();
         }
 
-        public BookCopy SetLoaned(ICollection<BookCopy> copies)
+        public BookCopy SetLoaned(BookCopy bc)
         {
-            foreach (BookCopy bc in copies)
+            if (bc.State == BookCopy.Status.AVAILABLE)
             {
-                if (bc.State == BookCopy.Status.AVAILABLE)
-                {
-                    bc.State = BookCopy.Status.NOT_AVAILABLE;
-                    return bc;
-                }
+                bc.State = BookCopy.Status.NOT_AVAILABLE;
+                return bc;
             }
-            throw new Exception("No copies are available!");
+            else
+            {
+                throw new Exception("The copy is not available");
+            }
         }
 
         public List<BookCopy> GetAllAvailableCopies(IEnumerable<Book> books)
@@ -69,6 +71,28 @@ namespace Library.Services
         public BookCopy GetCopyOnId(int Id)
         {
             return bookCopyRepository.Find(Id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public IEnumerable<BookCopy> AllAscendingOnProperty(string property)
+        {
+            return All().OrderBy(BuildQuery(property));
+        }
+
+        internal IEnumerable<BookCopy> AllDescendingOnProperty(string property)
+        {
+            return All().OrderByDescending(BuildQuery(property));
+        }
+
+        private Func<BookCopy, int> BuildQuery(string property)
+        {
+            var x = Expression.Parameter(typeof(BookCopy), "x");
+            var body = Expression.PropertyOrField(x, property);
+            return Expression.Lambda<Func<BookCopy, int>>(body, x).Compile();
         }
 
         private void OnUpdate()

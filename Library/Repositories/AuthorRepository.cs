@@ -38,7 +38,8 @@ namespace Library.Repositories
 
         public void Remove(Author item)
         {
-            throw new NotImplementedException();
+            context.Authors.Remove(item);
+            context.SaveChanges();
         }
     }
 }

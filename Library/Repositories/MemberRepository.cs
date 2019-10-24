@@ -28,17 +28,18 @@ namespace Library.Repositories
 
         public void Edit(Member item)
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
         public Member Find(int id)
         {
-            throw new NotImplementedException();
+            return context.Members.Find(id);
         }
 
         public void Remove(Member item)
         {
-            throw new NotImplementedException();
+            context.Members.Remove(item);
+            context.SaveChanges();
         }
     }
 }

@@ -3,6 +3,7 @@ using Library.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +35,12 @@ namespace Library.Services
             OnUpdate();
         }
 
+        public void Remove(Author a)
+        {
+            authorRepository.Remove(a);
+            OnUpdate();
+        }
+
         public Author Find(int id)
         {
             return authorRepository.Find(id);
@@ -41,6 +48,23 @@ namespace Library.Services
         public Author GetAuthorOnName(string name)
         {
             return authorRepository.All().Where(x => x.Name == name).FirstOrDefault();
+        }
+
+        public IEnumerable<Author> AllAscendingOnProperty(string property)
+        {
+            return All().OrderBy(BuildQuery(property));
+        }
+
+        internal IEnumerable<Author> AllDescendingOnProperty(string property)
+        {
+            return All().OrderByDescending(BuildQuery(property));
+        }
+
+        private Func<Author, int> BuildQuery(string property)
+        {
+            var x = Expression.Parameter(typeof(Author), "x");
+            var body = Expression.PropertyOrField(x, property);
+            return Expression.Lambda<Func<Author, int>>(body, x).Compile();
         }
 
         public void OnUpdate()

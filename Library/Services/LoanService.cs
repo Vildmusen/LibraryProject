@@ -3,6 +3,7 @@ using Library.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,6 +46,22 @@ namespace Library.Services
         public Member GetMemberFromCopyID(int copyID)
         {
             return All().Where(x => x.Member.Loans.Any(c => c.BookCopy.CopyID == copyID)).FirstOrDefault().Member;
+        }
+        public IEnumerable<Loan> AllAscendingOnProperty(string property)
+        {
+            return All().OrderBy(BuildQuery(property));
+        }
+
+        internal IEnumerable<Loan> AllDescendingOnProperty(string property)
+        {
+            return All().OrderByDescending(BuildQuery(property));
+        }
+
+        private Func<Loan, int> BuildQuery(string property)
+        {
+            var x = Expression.Parameter(typeof(Loan), "x");
+            var body = Expression.PropertyOrField(x, property);
+            return Expression.Lambda<Func<Loan, int>>(body, x).Compile();
         }
 
         public void OnUpdate()

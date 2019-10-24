@@ -21,7 +21,7 @@ namespace Library.Models
 
         public override string ToString()
         {
-            return String.Format("[{0}] {1} : {2}", LoanID, TimeOfLoan, BookCopy.Book.Title);
+            return String.Format("[{0}] {1} : {2}", LoanID, TimeOfLoan.ToShortDateString(), BookCopy.Book.Title);
         }
     }
 }

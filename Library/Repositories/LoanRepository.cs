@@ -38,6 +38,7 @@ namespace Library.Repositories
         public void Remove(Loan item)
         {
             context.Loans.Remove(item);
+            context.SaveChanges();
         }
     }
 }
