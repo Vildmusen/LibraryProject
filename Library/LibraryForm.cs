@@ -15,11 +15,11 @@ namespace Library
 {
     public partial class LibraryForm : Form
     {
-        AuthorService authorService;
-        BookService bookService;
-        MemberService memberService;
-        LoanService loanService;
-        BookCopyService bookCopyService;
+        private AuthorService authorService;
+        private BookService bookService;
+        private MemberService memberService;
+        private LoanService loanService;
+        private BookCopyService bookCopyService;
 
         public LibraryForm()
         {
@@ -88,7 +88,7 @@ namespace Library
         { 
             all_books_list.Items.Clear();
             foreach (Book b in bookService.All())
-            {
+            { 
                 all_books_list.Items.Add(b);
             }
         }
@@ -168,8 +168,10 @@ namespace Library
         {
             lbDetails.Items.Add(String.Format("Loaned by user: {0}", loan.Member.Name));
             lbDetails.Items.Add(String.Format("Book: {0}", loan.BookCopy.Book.Title));
+            lbDetails.Items.Add("");
             lbDetails.Items.Add(String.Format("Starting date: {0}", loan.TimeOfLoan));
             lbDetails.Items.Add(String.Format("Due date: {0}", loan.DueDate));
+            lbDetails.Items.Add("");
             if (loan.TimeOfReturn.HasValue)
             {
                 lbDetails.Items.Add(String.Format("Returned: {0}", loan.TimeOfReturn));
@@ -188,11 +190,20 @@ namespace Library
         {
             lbDetails.Items.Add(String.Format("Name: {0}", member.Name));
             lbDetails.Items.Add(String.Format("SSN: {0}", member.SSO));
+            lbDetails.Items.Add("");
             lbDetails.Items.Add(String.Format("Joined date: {0}", member.MemberShip.ToString()));
             lbDetails.Items.Add("");
-            lbDetails.Items.Add("Currently loaned books: ");
+            lbDetails.Items.Add("History: ");
             foreach (Loan l in member.Loans)
             {
+                lbDetails.Items.Add("");
+                if(l.TimeOfReturn != null)
+                {
+                    lbDetails.Items.Add(String.Format("Between: {0} - {1}", l.TimeOfLoan.ToShortDateString(), l.TimeOfReturn?.ToShortDateString()));
+                } else
+                {
+                    lbDetails.Items.Add(String.Format("Between: {0} - NOW", l.TimeOfLoan.ToShortDateString()));
+                }
                 showBookDetailsShort(l.BookCopy.Book);
             }
         }
@@ -494,12 +505,39 @@ namespace Library
                 }
                 else
                 {
-                    ErrorMessage("Chosen book has copies that are unavailable");
+                    ErrorMessage("Chosen book currently has one or more copies occupied by users.");
                 }
             }
             else
             {
                 ErrorMessage("Please choose a book");
+            }
+        }
+
+        /// <summary>
+        /// Calls loanService to edit a loan as returned.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void return_book_btn_Click(object sender, EventArgs e)
+        {
+            if (lbResult.SelectedItem is Loan l)
+            {
+                try
+                {
+                    l.TimeOfReturn = DateTime.Now;
+                    double diff = (l.DueDate - DateTime.Now).TotalDays;
+                    if (diff < 0) { ErrorMessage(String.Format("This book is late, you need to pay {0}kr", Math.Abs((int)diff * 10))); }
+                    l.BookCopy.State = BookCopy.Status.AVAILABLE;
+                    loanService.Edit(l);
+                } catch (Exception ex)
+                {
+                    ErrorMessage(ex);
+                }
+            }
+            else
+            {
+                ErrorMessage("Please select a loan");
             }
         }
 

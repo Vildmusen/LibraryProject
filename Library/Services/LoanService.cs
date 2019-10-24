@@ -33,9 +33,16 @@ namespace Library.Services
         public void Remove(Loan l)
         {
             loanRepository.Remove(l);
+            OnUpdate();
         }
 
-        internal Member GetMemberFromCopyID(int copyID)
+        public void Edit(Loan l)
+        {
+            loanRepository.Edit(l);
+            OnUpdate();
+        }
+
+        public Member GetMemberFromCopyID(int copyID)
         {
             return All().Where(x => x.Member.Loans.Any(c => c.BookCopy.CopyID == copyID)).FirstOrDefault().Member;
         }

@@ -40,6 +40,7 @@
             this.book_title_txt_box = new System.Windows.Forms.TextBox();
             this.add_copy_btn = new System.Windows.Forms.Button();
             this.Loan_page_tab = new System.Windows.Forms.TabPage();
+            this.show_all_btn2 = new System.Windows.Forms.Button();
             this.loan_with_member = new System.Windows.Forms.Button();
             this.show_all_members_btn = new System.Windows.Forms.Button();
             this.show_loans_btn = new System.Windows.Forms.Button();
@@ -67,7 +68,7 @@
             this.Error = new System.Windows.Forms.Label();
             this.all_books_lbl = new System.Windows.Forms.Label();
             this.all_books_list = new System.Windows.Forms.ListBox();
-            this.show_all_btn2 = new System.Windows.Forms.Button();
+            this.return_book_btn = new System.Windows.Forms.Button();
             this.library_tab_ctrl.SuspendLayout();
             this.book_page_tab.SuspendLayout();
             this.Loan_page_tab.SuspendLayout();
@@ -82,7 +83,7 @@
             this.lbResult.FormattingEnabled = true;
             this.lbResult.Location = new System.Drawing.Point(342, 31);
             this.lbResult.Name = "lbResult";
-            this.lbResult.Size = new System.Drawing.Size(300, 342);
+            this.lbResult.Size = new System.Drawing.Size(300, 290);
             this.lbResult.TabIndex = 0;
             this.lbResult.SelectedIndexChanged += new System.EventHandler(this.lbBooks_SelectedIndexChanged);
             // 
@@ -240,6 +241,7 @@
             // 
             // Loan_page_tab
             // 
+            this.Loan_page_tab.Controls.Add(this.return_book_btn);
             this.Loan_page_tab.Controls.Add(this.show_all_btn2);
             this.Loan_page_tab.Controls.Add(this.loan_with_member);
             this.Loan_page_tab.Controls.Add(this.show_all_members_btn);
@@ -252,10 +254,20 @@
             this.Loan_page_tab.Text = "Loans";
             this.Loan_page_tab.UseVisualStyleBackColor = true;
             // 
+            // show_all_btn2
+            // 
+            this.show_all_btn2.Location = new System.Drawing.Point(6, 6);
+            this.show_all_btn2.Name = "show_all_btn2";
+            this.show_all_btn2.Size = new System.Drawing.Size(69, 69);
+            this.show_all_btn2.TabIndex = 21;
+            this.show_all_btn2.Text = "Refresh All Books";
+            this.show_all_btn2.UseVisualStyleBackColor = true;
+            this.show_all_btn2.Click += new System.EventHandler(this.RefreshBook);
+            // 
             // loan_with_member
             // 
             this.loan_with_member.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
-            this.loan_with_member.Location = new System.Drawing.Point(241, 156);
+            this.loan_with_member.Location = new System.Drawing.Point(241, 231);
             this.loan_with_member.Name = "loan_with_member";
             this.loan_with_member.Size = new System.Drawing.Size(69, 69);
             this.loan_with_member.TabIndex = 20;
@@ -265,7 +277,7 @@
             // 
             // show_all_members_btn
             // 
-            this.show_all_members_btn.Location = new System.Drawing.Point(241, 6);
+            this.show_all_members_btn.Location = new System.Drawing.Point(241, 156);
             this.show_all_members_btn.Name = "show_all_members_btn";
             this.show_all_members_btn.Size = new System.Drawing.Size(69, 69);
             this.show_all_members_btn.TabIndex = 18;
@@ -275,11 +287,11 @@
             // 
             // show_loans_btn
             // 
-            this.show_loans_btn.Location = new System.Drawing.Point(241, 81);
+            this.show_loans_btn.Location = new System.Drawing.Point(6, 156);
             this.show_loans_btn.Name = "show_loans_btn";
             this.show_loans_btn.Size = new System.Drawing.Size(69, 69);
             this.show_loans_btn.TabIndex = 17;
-            this.show_loans_btn.Text = "Show loans by all members";
+            this.show_loans_btn.Text = "Show all loans";
             this.show_loans_btn.UseVisualStyleBackColor = true;
             this.show_loans_btn.Click += new System.EventHandler(this.show_loans_btn_Click);
             // 
@@ -476,7 +488,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(339, 381);
+            this.label2.Location = new System.Drawing.Point(339, 333);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 5;
@@ -485,9 +497,9 @@
             // lbDetails
             // 
             this.lbDetails.FormattingEnabled = true;
-            this.lbDetails.Location = new System.Drawing.Point(342, 397);
+            this.lbDetails.Location = new System.Drawing.Point(342, 358);
             this.lbDetails.Name = "lbDetails";
-            this.lbDetails.Size = new System.Drawing.Size(300, 173);
+            this.lbDetails.Size = new System.Drawing.Size(300, 212);
             this.lbDetails.TabIndex = 6;
             // 
             // Error
@@ -516,15 +528,16 @@
             this.all_books_list.TabIndex = 8;
             this.all_books_list.SelectedIndexChanged += new System.EventHandler(this.all_books_list_SelectedIndexChanged);
             // 
-            // show_all_btn2
+            // return_book_btn
             // 
-            this.show_all_btn2.Location = new System.Drawing.Point(6, 6);
-            this.show_all_btn2.Name = "show_all_btn2";
-            this.show_all_btn2.Size = new System.Drawing.Size(69, 69);
-            this.show_all_btn2.TabIndex = 21;
-            this.show_all_btn2.Text = "Refresh All Books";
-            this.show_all_btn2.UseVisualStyleBackColor = true;
-            this.show_all_btn2.Click += new System.EventHandler(this.RefreshBook);
+            this.return_book_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.return_book_btn.Location = new System.Drawing.Point(6, 231);
+            this.return_book_btn.Name = "return_book_btn";
+            this.return_book_btn.Size = new System.Drawing.Size(69, 69);
+            this.return_book_btn.TabIndex = 22;
+            this.return_book_btn.Text = "Return selected loan";
+            this.return_book_btn.UseVisualStyleBackColor = true;
+            this.return_book_btn.Click += new System.EventHandler(this.return_book_btn_Click);
             // 
             // LibraryForm
             // 
@@ -604,6 +617,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button show_all_btn2;
+        private System.Windows.Forms.Button return_book_btn;
     }
 }
 

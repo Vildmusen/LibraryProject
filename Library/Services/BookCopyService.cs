@@ -31,6 +31,12 @@ namespace Library.Services
             OnUpdate();
         }
 
+        public void Remove(BookCopy bc)
+        {
+            bookCopyRepository.Remove(bc);
+            OnUpdate();
+        }
+
         public BookCopy SetLoaned(ICollection<BookCopy> copies)
         {
             foreach (BookCopy bc in copies)
@@ -58,6 +64,11 @@ namespace Library.Services
                 }
             }
             return availableCopies;
+        }
+
+        public BookCopy GetCopyOnId(int Id)
+        {
+            return bookCopyRepository.Find(Id);
         }
 
         private void OnUpdate()
