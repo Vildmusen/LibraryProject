@@ -35,6 +35,7 @@ namespace Library.Services
 
         public void Remove(BookCopy bc)
         {
+            // TODO Can't remove if connected to a loan
             bookCopyRepository.Remove(bc);
             OnUpdate();
         }

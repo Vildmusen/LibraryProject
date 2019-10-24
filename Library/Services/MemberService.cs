@@ -37,6 +37,7 @@ namespace Library.Services
 
         public void Remove(Member m)
         {
+            // TODO Can't remove if currently has a loan.
             memberRepository.Remove(m);
             OnUpdate();
         }
