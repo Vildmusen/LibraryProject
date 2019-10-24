@@ -28,6 +28,12 @@ namespace Library.Services
             return bookRepository.All();
         }
 
+        public void Delete(Book b)
+        {
+            bookRepository.Remove(b);
+            OnUpdate();
+        }
+
         public IEnumerable<Book> AllAvailable()
         {
             return All().Where(b => b.Copies.Any(c => c.State == BookCopy.Status.AVAILABLE));
@@ -41,6 +47,18 @@ namespace Library.Services
         public IEnumerable<Book> GetAllThatContainsInTitle(string a)
         {
             return bookRepository.All().Where(b => b.Title.Contains(a));
+        }
+
+        public bool AllCopiesAvailable(Book b)
+        {
+            foreach(BookCopy bs in b.Copies)
+            {
+                if(bs.State == BookCopy.Status.NOT_AVAILABLE)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -59,15 +77,16 @@ namespace Library.Services
             OnUpdate();
         }
 
+        public void AddCopy(BookCopy bc)
+        {
+            Book b = bookRepository.Find(bc.Book.BookID);
+            b.Copies.Add(bc);
+            bookRepository.Edit(b);
+        }
+
         public void Remove(Book b)
         {
             bookRepository.Remove(b);
-            OnUpdate();
-        }
-
-        public void AddCopy(Book b)
-        {
-            
             OnUpdate();
         }
 

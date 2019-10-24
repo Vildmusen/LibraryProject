@@ -15,10 +15,12 @@ namespace Library.Models
         public string Name { get; set; }
         public DateTime MemberShip { get; set; }
         public ICollection<Loan> Loans { get; set; }
+
         public Member()
         {
             Loans = new List<Loan>();
         }
+
         public override string ToString()
         {
             return SSO + " : " + Name;

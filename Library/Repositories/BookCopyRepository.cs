@@ -28,7 +28,7 @@ namespace Library.Repositories
 
         public void Edit(BookCopy item)
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
         public BookCopy Find(int id)
@@ -38,7 +38,7 @@ namespace Library.Repositories
 
         public void Remove(BookCopy item)
         {
-            throw new NotImplementedException();
+            context.BookCopies.Remove(item);
         }
     }
 }

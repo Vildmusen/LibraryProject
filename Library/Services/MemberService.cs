@@ -36,7 +36,7 @@ namespace Library.Services
 
         public IEnumerable<Book> GetBooksByMemberName(Member member)
         {
-            return member.Loans.Select(b => b.Book.Book);
+            return member.Loans.Select(b => b.BookCopy.Book);
         }
 
         public void OnUpdate()

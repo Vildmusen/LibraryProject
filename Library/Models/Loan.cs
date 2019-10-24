@@ -13,12 +13,15 @@ namespace Library.Models
         public int LoanID { get; set; }
         public DateTime TimeOfLoan { get; set; }
         public DateTime DueDate { get; set; }
-        public DateTime TimeOfReturn { get; set; }
-        public BookCopy Book { get; set; }
+        public DateTime? TimeOfReturn { get; set; }
+        public BookCopy BookCopy { get; set; }
         public Member Member { get; set; }
-        public Loan()
-        {
 
+        public Loan() { }
+
+        public override string ToString()
+        {
+            return String.Format("[{0}] {1} : {2}", LoanID, TimeOfLoan, BookCopy.Book.Title);
         }
     }
 }

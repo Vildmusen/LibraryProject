@@ -16,7 +16,8 @@ namespace Library.Repositories
         }
         public void Add(Loan item)
         {
-            throw new NotImplementedException();
+            context.Loans.Add(item);
+            context.SaveChanges();
         }
 
         public IEnumerable<Loan> All()
@@ -26,17 +27,17 @@ namespace Library.Repositories
 
         public void Edit(Loan item)
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
 
         public Loan Find(int id)
         {
-            throw new NotImplementedException();
+            return context.Loans.Find(id);
         }
 
         public void Remove(Loan item)
         {
-            throw new NotImplementedException();
+            context.Loans.Remove(item);
         }
     }
 }

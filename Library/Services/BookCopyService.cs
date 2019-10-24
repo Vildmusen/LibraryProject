@@ -20,9 +20,15 @@ namespace Library.Services
             this.bookCopyRepository = rFactory.CreateBookCopyRepository();
         }
 
+        public IEnumerable<BookCopy> All()
+        {
+            return bookCopyRepository.All();
+        }
+
         public void Add(BookCopy bc)
         {
             bookCopyRepository.Add(bc);
+            OnUpdate();
         }
 
         public BookCopy SetLoaned(ICollection<BookCopy> copies)
@@ -31,11 +37,32 @@ namespace Library.Services
             {
                 if (bc.State == BookCopy.Status.AVAILABLE)
                 {
-                    bc.State = BookCopy.Status.LOANED;
+                    bc.State = BookCopy.Status.NOT_AVAILABLE;
                     return bc;
                 }
             }
             throw new Exception("No copies are available!");
+        }
+
+        public List<BookCopy> GetAllAvailableCopies(IEnumerable<Book> books)
+        {
+            List<BookCopy> availableCopies = new List<BookCopy>();
+            foreach (Book b in books)
+            {
+                foreach (BookCopy bc in b.Copies)
+                {
+                    if (bc.State == BookCopy.Status.AVAILABLE)
+                    {
+                        availableCopies.Add(bc);
+                    }
+                }
+            }
+            return availableCopies;
+        }
+
+        private void OnUpdate()
+        {
+            Updated?.Invoke(this, new EventArgs());
         }
     }
 }
