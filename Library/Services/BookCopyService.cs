@@ -40,11 +40,17 @@ namespace Library.Services
             OnUpdate();
         }
 
+        public void Edit(BookCopy bc)
+        {
+            bookCopyRepository.Edit(bc);
+            OnUpdate();
+        }
+
         public BookCopy SetLoaned(BookCopy bc)
         {
-            if (bc.State == BookCopy.Status.AVAILABLE)
+            if (bc.State == BookCopy.Status.RETURNED)
             {
-                bc.State = BookCopy.Status.NOT_AVAILABLE;
+                bc.State = BookCopy.Status.ON_LOAN;
                 return bc;
             }
             else
@@ -60,7 +66,7 @@ namespace Library.Services
             {
                 foreach (BookCopy bc in b.Copies)
                 {
-                    if (bc.State == BookCopy.Status.AVAILABLE)
+                    if (bc.State == BookCopy.Status.RETURNED)
                     {
                         availableCopies.Add(bc);
                     }

@@ -42,6 +42,7 @@
             this.book_title_txt_box = new System.Windows.Forms.TextBox();
             this.add_copy_btn = new System.Windows.Forms.Button();
             this.Loan_page_tab = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.property_combobox = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -77,7 +78,6 @@
             this.member_name_text_box = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Error = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.library_tab_ctrl.SuspendLayout();
             this.book_page_tab.SuspendLayout();
             this.Loan_page_tab.SuspendLayout();
@@ -293,6 +293,16 @@
             this.Loan_page_tab.Text = "Administration";
             this.Loan_page_tab.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(299, 344);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(35, 21);
+            this.button2.TabIndex = 35;
+            this.button2.Text = "sort";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.sort_btn_click);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(340, 344);
@@ -323,12 +333,12 @@
             // 
             // books_by_member_btn
             // 
-            this.books_by_member_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
+            this.books_by_member_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.books_by_member_btn.Location = new System.Drawing.Point(381, 445);
             this.books_by_member_btn.Name = "books_by_member_btn";
-            this.books_by_member_btn.Size = new System.Drawing.Size(97, 57);
+            this.books_by_member_btn.Size = new System.Drawing.Size(156, 57);
             this.books_by_member_btn.TabIndex = 5;
-            this.books_by_member_btn.Text = "Show books currently loaned by Member";
+            this.books_by_member_btn.Text = "Show member\'s loans";
             this.books_by_member_btn.UseVisualStyleBackColor = true;
             this.books_by_member_btn.Click += new System.EventHandler(this.books_by_member_btn_Click);
             // 
@@ -342,10 +352,10 @@
             // 
             // loan_with_member
             // 
-            this.loan_with_member.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
-            this.loan_with_member.Location = new System.Drawing.Point(484, 445);
+            this.loan_with_member.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.loan_with_member.Location = new System.Drawing.Point(543, 445);
             this.loan_with_member.Name = "loan_with_member";
-            this.loan_with_member.Size = new System.Drawing.Size(95, 57);
+            this.loan_with_member.Size = new System.Drawing.Size(147, 57);
             this.loan_with_member.TabIndex = 20;
             this.loan_with_member.Text = "Loan Selected Book to Member";
             this.loan_with_member.UseVisualStyleBackColor = true;
@@ -639,16 +649,6 @@
             this.Error.Name = "Error";
             this.Error.Size = new System.Drawing.Size(0, 13);
             this.Error.TabIndex = 7;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(299, 344);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(35, 21);
-            this.button2.TabIndex = 35;
-            this.button2.Text = "sort";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.sort_btn_click);
             // 
             // LibraryForm
             // 

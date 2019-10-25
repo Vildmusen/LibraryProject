@@ -44,7 +44,7 @@ namespace Library.Services
 
         public IEnumerable<BookCopy> GetBookCopysByMemberName(Member member)
         {
-            return member.Loans.Where(b => b.BookCopy.State == BookCopy.Status.NOT_AVAILABLE).Select(b => b.BookCopy);
+            return member.Loans.Where(b => b.BookCopy.State == BookCopy.Status.ON_LOAN).Select(b => b.BookCopy);
         }
 
         public IEnumerable<Member> AllAscendingOnProperty(string property)

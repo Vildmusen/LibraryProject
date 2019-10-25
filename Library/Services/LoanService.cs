@@ -43,10 +43,16 @@ namespace Library.Services
             OnUpdate();
         }
 
+        public IEnumerable<Loan> GetLoansByMember(Member m)
+        {
+            return All().Where(x => x.Member == m);
+        }
+
         public Member GetMemberFromCopyID(int copyID)
         {
             return All().Where(x => x.Member.Loans.Any(c => c.BookCopy.CopyID == copyID)).FirstOrDefault().Member;
         }
+
         public IEnumerable<Loan> AllAscendingOnProperty(string property)
         {
             return All().OrderBy(BuildQuery(property));

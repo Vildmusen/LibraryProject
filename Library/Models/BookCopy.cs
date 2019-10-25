@@ -36,8 +36,9 @@ namespace Library.Models
         /// </summary>
         public enum Status
         {
-            AVAILABLE,
-            NOT_AVAILABLE
+            ON_LOAN,
+            RETURNED,
+            OVERDUE
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Library.Models
         /// </summary>
         public BookCopy()
         {
-            State = Status.AVAILABLE;
+            State = Status.RETURNED;
         }
 
         /// <summary>

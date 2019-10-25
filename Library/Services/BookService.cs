@@ -38,7 +38,7 @@ namespace Library.Services
 
         public IEnumerable<Book> AllAvailable()
         {
-            return All().Where(b => b.Copies.Any(c => c.State == BookCopy.Status.AVAILABLE));
+            return All().Where(b => b.Copies.Any(c => c.State == BookCopy.Status.RETURNED));
         }
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)
@@ -55,7 +55,7 @@ namespace Library.Services
         {
             foreach(BookCopy bs in b.Copies)
             {
-                if(bs.State == BookCopy.Status.NOT_AVAILABLE)
+                if(bs.State == BookCopy.Status.ON_LOAN)
                 {
                     return false;
                 }

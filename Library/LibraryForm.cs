@@ -65,9 +65,21 @@ namespace Library
         #region REFRESH
 
         /// <summary>
-        /// Displays all loans in "lbResult"
+        /// Displays all loans in "lbResult". Checks if a loan is overdue and changes the status of the copy accordingly.
         /// </summary>
-        private void RefreshLoans() { Show(loanService.All()); }
+        private void RefreshLoans()
+        {
+            List<Loan> allLoans = loanService.All().ToList();
+            foreach (Loan l in allLoans)
+            {
+                if(l.BookCopy.State == BookCopy.Status.ON_LOAN && DateTime.Compare(DateTime.Now, l.DueDate) > 0)
+                {
+                    l.BookCopy.State = BookCopy.Status.OVERDUE;
+                    bookCopyService.Edit(l.BookCopy);
+                }
+            }
+            Show(allLoans);
+        }
         /// <summary>
         /// Displays all Book Copies in "lbResult"
         /// </summary>
@@ -188,7 +200,7 @@ namespace Library
             lbDetails.Items.Add(String.Format("Description: {0}", bc.Book.Description));
             lbDetails.Items.Add(String.Format("Condition: {0}", bc.Condition));
             lbDetails.Items.Add("");
-            if (bc.State == BookCopy.Status.NOT_AVAILABLE)
+            if (bc.State == BookCopy.Status.ON_LOAN || bc.State == BookCopy.Status.OVERDUE)
             {
                 lbDetails.Items.Add(String.Format("Currently occupied by: {0}", loanService.GetMemberFromCopyID(bc.CopyID).Name));
             }
@@ -535,7 +547,7 @@ namespace Library
                     string Memberinfo = members_combobox.SelectedItem.ToString();
                     if (memberService.GetMemberBySSN(Memberinfo.Split(':')[0].Trim()) is Member m)
                     {
-                        Show(memberService.GetBookCopysByMemberName(m));
+                        Show(loanService.GetLoansByMember(m));
                     }
                 } else
                 {
@@ -615,7 +627,7 @@ namespace Library
                     l.TimeOfReturn = DateTime.Now;
                     double diff = (l.DueDate - DateTime.Now).TotalDays;
                     if (diff < 0) { ErrorMessage(String.Format("This book is late, you need to pay {0}kr", Math.Abs((int)diff * 10))); }
-                    l.BookCopy.State = BookCopy.Status.AVAILABLE;
+                    l.BookCopy.State = BookCopy.Status.RETURNED;
                     Random rand = new Random();
                     l.BookCopy.Condition = l.BookCopy.Condition -= rand.Next(3) >= 0 ? l.BookCopy.Condition -= rand.Next(3) : 0;
                     loanService.Edit(l);

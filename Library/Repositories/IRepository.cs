@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Repositories {
+
     /// <summary>
     /// Basic repository functionality, exposes CRUD-operations.
     /// </summary>
