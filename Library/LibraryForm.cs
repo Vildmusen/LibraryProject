@@ -72,11 +72,11 @@ namespace Library
             List<Loan> allLoans = loanService.All().ToList();
             foreach (Loan l in allLoans)
             {
-                if(l.BookCopy.State == BookCopy.Status.ON_LOAN && DateTime.Compare(DateTime.Now, l.DueDate) > 0)
-                {
-                    l.BookCopy.State = BookCopy.Status.OVERDUE;
-                    bookCopyService.Edit(l.BookCopy);
-                }
+                //if(l.BookCopy.State == BookCopy.Status.ON_LOAN && DateTime.Compare(DateTime.Now, l.DueDate) > 0)
+                //{
+                //    l.BookCopy.State = BookCopy.Status.OVERDUE;
+                //    bookCopyService.Edit(l.BookCopy);
+                //}
             }
             Show(allLoans);
         }
@@ -164,12 +164,15 @@ namespace Library
         {
             resullt_lbl.Text = String.Format("Current result: ({0}s)", typeof(T).Name);
             lbResult.Items.Clear();
-            foreach (T item in source)
+            if(source.ToList().Count() > 0)
             {
-                lbResult.Items.Add(item);
+                foreach (T item in source)
+                {
+                    lbResult.Items.Add(item);    
+                }
+                lastShowed = source.FirstOrDefault().GetType();
+                setPropertyBox(lastShowed);
             }
-            lastShowed = source.FirstOrDefault().GetType();
-            setPropertyBox(lastShowed);
         }
 
         /// <summary>
@@ -383,8 +386,8 @@ namespace Library
                 {
                 BookCopy copy = new BookCopy { Book = original, Condition = 10 };
                 bookCopyService.Add(copy);
-                lbDetails.Items.Clear();
-                showBookDetails(original);
+                books_details_lstbox.Items.Clear();
+                showBookDetailsBooksTab(original);
                 } else
                 {
                     ErrorMessage("Please choose a book to copy");
@@ -406,6 +409,7 @@ namespace Library
             try
             {
                 authorService.Add(author_name_txtbox.Text);
+                MessageBox.Show("Succesfully added author", "Success");
             }
             catch (Exception ex)
             {
@@ -462,6 +466,7 @@ namespace Library
             try
             {
                 memberService.Add(member_name_text_box.Text, member_sso_text_box.Text);
+                MessageBox.Show("Succesfully added member", "Sucess");
             }
             catch (Exception ex)
             {
@@ -651,25 +656,31 @@ namespace Library
         {
             if(lbResult.SelectedItem != null && UserVerification())
             {
-                if (lbResult.SelectedItem.GetType() == typeof(Book))
+                try
                 {
-                    bookService.Remove(lbResult.SelectedItem as Book);
-                }
-                else if (lbResult.SelectedItem.GetType() == typeof(Author))
+                    if (lbResult.SelectedItem.GetType() == typeof(Book))
+                    {
+                        bookService.Remove(lbResult.SelectedItem as Book);
+                    }
+                    else if (lbResult.SelectedItem.GetType() == typeof(Author))
+                    {
+                        authorService.Remove(lbResult.SelectedItem as Author);
+                    }
+                    else if (lbResult.SelectedItem.GetType() == typeof(Member))
+                    {
+                        memberService.Remove(lbResult.SelectedItem as Member);
+                    }
+                    else if (lbResult.SelectedItem.GetType() == typeof(BookCopy))
+                    {
+                        bookCopyService.Remove(lbResult.SelectedItem as BookCopy);
+                    }
+                    else if (lbResult.SelectedItem.GetType() == typeof(Loan))
+                    {
+                        loanService.Remove(lbResult.SelectedItem as Loan);
+                    }
+                } catch (Exception ex)
                 {
-                    authorService.Remove(lbResult.SelectedItem as Author);
-                }
-                else if (lbResult.SelectedItem.GetType() == typeof(Member))
-                {
-                    memberService.Remove(lbResult.SelectedItem as Member);
-                }
-                else if (lbResult.SelectedItem.GetType() == typeof(BookCopy))
-                {
-                    bookCopyService.Remove(lbResult.SelectedItem as BookCopy);
-                }
-                else if (lbResult.SelectedItem.GetType() == typeof(Loan))
-                {
-                    loanService.Remove(lbResult.SelectedItem as Loan);
+                    ErrorMessage(ex);
                 }
             }
         }
@@ -694,6 +705,7 @@ namespace Library
         private void sort_btn_click(object sender, EventArgs e)
         {
             bool Ascending = button1.Text == "^" ? true : false;
+            if(property_combobox.Items.Count == 0) { ErrorMessage("Nothing to sort"); return; }
             string propertyText = property_combobox.Text == "SELECT PROPERTY" ? property_combobox.Items[0].ToString() : property_combobox.Text;
 
             if (lastShowed == typeof(Book))
