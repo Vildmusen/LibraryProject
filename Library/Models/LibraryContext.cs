@@ -25,10 +25,25 @@ namespace Library.Models {
         // Add a DbSet for each entity type that you want to include in your model. For more information 
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
+        /// <summary>
+        /// Set the table for Book in our database.
+        /// </summary>
         public DbSet<Book> Books { get; set; }
+        /// <summary>
+        /// Set the table for Author in our database.
+        /// </summary>
         public DbSet<Author> Authors { get; set; }
+        /// <summary>
+        /// Set the table for BookCopy in our database.
+        /// </summary>
         public DbSet<BookCopy> BookCopies { get; set; }
+        /// <summary>
+        /// Set the table for Loan in our database.
+        /// </summary>
         public DbSet<Loan> Loans { get; set; }
+        /// <summary>
+        /// Set the table for Member in our database.
+        /// </summary>
         public DbSet<Member> Members { get; set; }
 
 

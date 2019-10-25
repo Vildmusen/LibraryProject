@@ -52,7 +52,7 @@ namespace Library
             memberService.Updated += RefreshMember;
             loanService.Updated += RefreshLoans;
             bookCopyService.Updated += RefreshBookCopies;
-
+            
             RefreshBooks();
             RefreshAuthors();
             RefreshCopies();
@@ -61,6 +61,8 @@ namespace Library
 
             property_combobox.Text = "SELECT PROPERTY";
         }
+
+        #region REFRESH
 
         /// <summary>
         /// Displays all loans in "lbResult"
@@ -137,6 +139,8 @@ namespace Library
         /// <param name="e"></param>
         private void RefreshBookCopies(object sender, EventArgs e) { RefreshCopies(); }
 
+        #endregion
+
         #region DISPLAY FUNCTIONS
 
         /// <summary>
@@ -164,6 +168,7 @@ namespace Library
         {
             PropertyInfo[] properties = type.GetProperties();
             property_combobox.Items.Clear();
+            property_combobox.Text = "SELECT PROPERTY";
             foreach(PropertyInfo p in properties)
             {
                 if(p.PropertyType == typeof(int))
