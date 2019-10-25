@@ -44,12 +44,12 @@ namespace Library.Models
         public Loan() { }
 
         /// <summary>
-        /// Displays ID, starting time and the title of the book.
+        /// Displays ID, status and the title of the book.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("[{0}] {1} : {2}", LoanID, TimeOfLoan.ToShortDateString(), BookCopy.Book.Title);
+            return String.Format("[{0}] {1} : {2}", LoanID, BookCopy.State, BookCopy.Book.Title);
         }
     }
 }

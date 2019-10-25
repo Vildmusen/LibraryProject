@@ -357,15 +357,21 @@ namespace Library
         {
             try
             {
-                string name = author_select_combo_box.SelectedItem.ToString();
-                Author current = authorService.GetAuthorOnName(name);
-                Book b = new Book
+                if(!String.IsNullOrEmpty(book_description_txt_box.Text) && !(String.IsNullOrEmpty(book_title_txt_box.Text))){
+
+                    string name = author_select_combo_box.SelectedItem.ToString();
+                    Author current = authorService.GetAuthorOnName(name);
+                    Book b = new Book
+                    {
+                        Title = book_title_txt_box.Text,
+                        Description = book_description_txt_box.Text,
+                        AuthorOfBook = authorService.Find(current.AuthorID)
+                    };
+                    bookService.Add(b);
+                } else
                 {
-                    Title = book_title_txt_box.Text,
-                    Description = book_description_txt_box.Text,
-                    AuthorOfBook = authorService.Find(current.AuthorID)
-                };
-                bookService.Add(b);
+                    ErrorMessage("Please fill in all fields");
+                }
             }
             catch (Exception ex)
             {
@@ -736,6 +742,20 @@ namespace Library
             setPropertyBox(lastShowed);
         }
 
+        /// <summary>
+        /// Shows all books with atleast 1 copy that is available.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void show_available_books_Click(object sender, EventArgs e)
+        {
+            all_books_list.Items.Clear();
+            foreach (Book b in bookService.AllAvailable())
+            {
+                all_books_list.Items.Add(b);
+            }
+        }
+
         #endregion
 
         #region LIST INTERACTION
@@ -793,6 +813,5 @@ namespace Library
             }
         }
         #endregion
-
     }
 }

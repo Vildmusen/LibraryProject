@@ -27,6 +27,7 @@
             this.add_book_btn = new System.Windows.Forms.Button();
             this.library_tab_ctrl = new System.Windows.Forms.TabControl();
             this.book_page_tab = new System.Windows.Forms.TabPage();
+            this.show_available_books = new System.Windows.Forms.Button();
             this.books_details_lstbox = new System.Windows.Forms.ListBox();
             this.label11 = new System.Windows.Forms.Label();
             this.all_books_lbl = new System.Windows.Forms.Label();
@@ -121,6 +122,7 @@
             // 
             // book_page_tab
             // 
+            this.book_page_tab.Controls.Add(this.show_available_books);
             this.book_page_tab.Controls.Add(this.books_details_lstbox);
             this.book_page_tab.Controls.Add(this.label11);
             this.book_page_tab.Controls.Add(this.all_books_lbl);
@@ -143,6 +145,17 @@
             this.book_page_tab.TabIndex = 0;
             this.book_page_tab.Text = "Books";
             this.book_page_tab.UseVisualStyleBackColor = true;
+            // 
+            // show_available_books
+            // 
+            this.show_available_books.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
+            this.show_available_books.Location = new System.Drawing.Point(21, 204);
+            this.show_available_books.Name = "show_available_books";
+            this.show_available_books.Size = new System.Drawing.Size(69, 58);
+            this.show_available_books.TabIndex = 25;
+            this.show_available_books.Text = "Show books with available copies";
+            this.show_available_books.UseVisualStyleBackColor = true;
+            this.show_available_books.Click += new System.EventHandler(this.show_available_books_Click);
             // 
             // books_details_lstbox
             // 
@@ -172,9 +185,9 @@
             // 
             // delete_book_btn
             // 
-            this.delete_book_btn.Location = new System.Drawing.Point(21, 108);
+            this.delete_book_btn.Location = new System.Drawing.Point(21, 86);
             this.delete_book_btn.Name = "delete_book_btn";
-            this.delete_book_btn.Size = new System.Drawing.Size(69, 69);
+            this.delete_book_btn.Size = new System.Drawing.Size(69, 53);
             this.delete_book_btn.TabIndex = 20;
             this.delete_book_btn.Text = "Delete Selected";
             this.delete_book_btn.UseVisualStyleBackColor = true;
@@ -201,9 +214,9 @@
             // 
             // show_all_books_btn
             // 
-            this.show_all_books_btn.Location = new System.Drawing.Point(21, 193);
+            this.show_all_books_btn.Location = new System.Drawing.Point(21, 145);
             this.show_all_books_btn.Name = "show_all_books_btn";
-            this.show_all_books_btn.Size = new System.Drawing.Size(69, 69);
+            this.show_all_books_btn.Size = new System.Drawing.Size(69, 53);
             this.show_all_books_btn.TabIndex = 16;
             this.show_all_books_btn.Text = "Refresh All Books";
             this.show_all_books_btn.UseVisualStyleBackColor = true;
@@ -260,9 +273,9 @@
             // 
             // add_copy_btn
             // 
-            this.add_copy_btn.Location = new System.Drawing.Point(21, 24);
+            this.add_copy_btn.Location = new System.Drawing.Point(21, 27);
             this.add_copy_btn.Name = "add_copy_btn";
-            this.add_copy_btn.Size = new System.Drawing.Size(69, 69);
+            this.add_copy_btn.Size = new System.Drawing.Size(69, 53);
             this.add_copy_btn.TabIndex = 3;
             this.add_copy_btn.Text = "Add copy of selected";
             this.add_copy_btn.UseVisualStyleBackColor = true;
@@ -357,7 +370,7 @@
             this.loan_with_member.Name = "loan_with_member";
             this.loan_with_member.Size = new System.Drawing.Size(147, 57);
             this.loan_with_member.TabIndex = 20;
-            this.loan_with_member.Text = "Loan Selected Book to Member";
+            this.loan_with_member.Text = "Loan Selected Copy to Member";
             this.loan_with_member.UseVisualStyleBackColor = true;
             this.loan_with_member.Click += new System.EventHandler(this.loan_with_member_Click);
             // 
@@ -736,6 +749,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox property_combobox;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button show_available_books;
     }
 }
 
